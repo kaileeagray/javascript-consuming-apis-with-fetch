@@ -18,9 +18,21 @@
         </style>
     </head>
     <body>
-        <h1 class="header">Github Repos</h1>
-        <div id="list">
-
-        </div>
+        <h1>Create A New Repo</h1>
+        <form id="repo-form" action="fun-time">
+            <label for="name">Repo Name:</label>
+            <input type="text" name="name"></input>
+            <label for="description">Description:</label>
+            <input type="text" name="description"></input>
+            <label for="description">Github Token:</label>
+            <input type="text" name="token"></input>
+            <input type="submit" value="create repo"></input>
+        </form>
+        <button id="my-repos">Get My Repos</button>
+        <h1 class="header">My Github Repos</h1>
+        <div id="my-repo-list"></div>
+        <button id="public-repos">Get Public Repos</button>
+        <h1 class="header">Public Github Repos</h1>
+        <div id="public-repo-list"></div>
     </body>
 </html>
