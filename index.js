@@ -18,8 +18,8 @@
                 })
         }
 
-        function getUserRepos() {
-            return fetch('https://api.github.com/users/lukeghenco/repos')
+        function getUserRepos(username) {
+            return fetch('https://api.github.com/users/' + username + '/repos?sort=created')
                 .then(function(response) {
                     return response.json();
                 })
@@ -29,7 +29,6 @@
         }
 
         function createRepo(data) {
-            console.log(data)
             return fetch('https://api.github.com/user/repos', {
                 method: 'POST',
                 headers: {
@@ -50,6 +49,7 @@
     var showMyRepos = true
     var showPublicRepos = true
     var form;
+    var usernameForm;
     var publicReposButton;
     var myReposButton;
     var currentRepoType;
@@ -57,11 +57,29 @@
 
     document.addEventListener('DOMContentLoaded', function() {
         // load form listener
-        form = document.querySelector('form');
+        form = document.querySelector('form')
         form.addEventListener('submit', function(event) {
             event.preventDefault();
             submitForm();
         })
+
+        // load UsernameForm listener
+        usernameForm = document.getElementById('username-form')
+        usernameForm.addEventListener('submit', function(event) {
+
+            event.preventDefault();
+
+            var username = usernameForm.querySelectorAll('input[name]')[0].value;
+
+            if (showMyRepos) {
+                showMyRepos = !showMyRepos
+                getRepos('my-repo-list', username)
+            } else {
+                showMyRepos = !showMyRepos
+                removeRepos()
+            }
+        })
+
 
         // give public repos button an event listener
         publicReposButton = document.getElementById('public-repos')
@@ -77,30 +95,14 @@
                 removeRepos()
             }
 
-
         })
 
-        // give my repos button an event listener
-        myReposButton = document.getElementById('my-repos')
-        myReposButton.addEventListener('click', function(event) {
-
-            event.preventDefault();
-
-            if (showMyRepos) {
-                showMyRepos = !showMyRepos
-                getRepos('my-repo-list')
-            } else {
-                showMyRepos = !showMyRepos
-                removeRepos()
-            }
-
-        })
     });
 
-    function getRepos(type) {
+    function getRepos(type, username) {
         currentRepoType = type
         if (type === 'my-repo-list') {
-            return Repo.getUserRepos()
+            return Repo.getUserRepos(username)
                        .then(setRepos)
         } else if (type === 'public-repo-list') {
             return Repo.getPublicRepos()

@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8">
         <title></title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.4/semantic.css">
         <script src="index.js"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/fetch/1.0.0/fetch.js"></script>
 
@@ -18,21 +19,38 @@
         </style>
     </head>
     <body>
-        <h1>Create A New Repo</h1>
-        <form id="repo-form" action="fun-time">
-            <label for="name">Repo Name:</label>
-            <input type="text" name="name"></input>
-            <label for="description">Description:</label>
-            <input type="text" name="description"></input>
-            <label for="description">Github Token:</label>
-            <input type="text" name="token"></input>
-            <input type="submit" value="create repo"></input>
-        </form>
-        <button id="my-repos">Get My Repos</button>
-        <h1 class="header">My Github Repos</h1>
-        <div id="my-repo-list"></div>
-        <button id="public-repos">Get Public Repos</button>
-        <h1 class="header">Public Github Repos</h1>
-        <div id="public-repo-list"></div>
+
+        <div class="ui sizer vertical segment">
+
+            <!-- CREATE REPO FORM -->
+            <div class="ui huge header">Create A New Repo</div>
+            <form id="repo-form" class="ui-form">
+                <label for="name">Repo Name:</label>
+                <input type="text" name="name" />
+                <label for="description">Description:</label>
+                <input type="text" name="description" />
+                <label for="description">Github Token:</label>
+                <input type="text" name="token" />
+                <input type="submit" value="create repo" />
+            </form>
+
+
+            <!-- GET USERS REPOS -->
+            <div class="ui huge header">My Github Repos</div>
+            <form id="username-form" class="ui-form">
+                <label for="username">Github Username:</label>
+                <input type="text" name="username" />
+                <input type="submit" value="Get My Repos" />
+            </form>
+            <div id="my-repo-list"></div>
+
+
+            <!-- SHOW PUBLIC REPOS -->
+            <div class="ui huge header">Public Github Repos</div>
+            <button id="public-repos">Get Public Repos</button>
+            <div id="public-repo-list"></div>
+
+
+        </div>
     </body>
 </html>
