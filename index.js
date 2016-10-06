@@ -41,6 +41,12 @@
                     description: data.description
                 })
             })
+            .then(function(response) {
+                return response.json()
+            })
+            .then(function(json) {
+                return json.full_name.split('/')[0]
+            })
         }
     }
 
@@ -50,8 +56,8 @@
     var showPublicRepos = true
     var form;
     var usernameForm;
+    var username;
     var publicReposButton;
-    var myReposButton;
     var currentRepoType;
 
 
@@ -69,7 +75,7 @@
 
             event.preventDefault();
 
-            var username = usernameForm.querySelectorAll('input[name]')[0].value;
+            username = usernameForm.querySelectorAll('input[name]')[0].value;
 
             if (showMyRepos) {
                 showMyRepos = !showMyRepos
@@ -124,7 +130,20 @@
             formData[info[i].name] = info[i].value;
         }
 
-        Repo.createRepo(formData)
+        return Repo.createRepo(formData)
+                   .then(function(data) {
+                       username = data
+                   })
+                   .then(function() {
+                       var repoDiv = document.getElementById('my-repo-list')
+
+                       if (repoDiv.hasChildNodes()) {
+                           removeRepos()
+                       }
+                   })
+                   .then(function() {
+                       getRepos('my-repo-list', username);
+                   })
     }
 
     function displayRepos() {
